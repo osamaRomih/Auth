@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema(
       minlength: [6, "Too short password"],
     },
 
-    // role: {
-    //   type: String,
-    //   enum: ["user", "manager", "admin"],
-    //   default: "user",
-    // },
+    isAdmin: {
+      type: Boolean,
+      // enum: ["user", "manager", "admin"],
+      default: true,
+    },
   },
   { timestamps: true }
 );

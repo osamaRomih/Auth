@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 const protect = (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     res.status(401).json({ message: "No token provided" });
     return;
@@ -12,7 +11,7 @@ const protect = (req, res, next) => {
 
   try {
     const dcrypt = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = dcrypt.id;
+    req.user = dcrypt;
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid or expired token" });

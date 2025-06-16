@@ -7,7 +7,7 @@ const routre = express.Router();
 // register (Signup)
 routre.post("/register", async (req, res) => {
   try {
-    const { password, email, fullName } = req.body;
+    const { password, email, fullName, isAdmin } = req.body;
     const userData = await User.findOne({ email });
     console.log("body: ", userData);
     if (userData) {
@@ -20,10 +20,11 @@ routre.post("/register", async (req, res) => {
       email,
       password: hashPassword,
       fullName,
+      isAdmin,
     });
     console.log("saveDB: ", saveDB);
     if (hashPassword) {
-      res.status(201).json({ email, fullName, id: saveDB._id });
+      res.status(201).json({ email, fullName, id: saveDB._id, isAdmin });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });

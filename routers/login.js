@@ -21,11 +21,21 @@ routre.post("/login", async (req, res) => {
       return;
     }
 
-    const token = jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1m",
-    });
+    const token = jwt.sign(
+      { id: findUser._id, role: findUser.isAdmin },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRE,
+      }
+    );
 
-    res.status(201).json(token);
+    res.status(201).json({
+      token,
+      // just Chack Data
+      data: {
+        findUser,
+      },
+    });
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
